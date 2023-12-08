@@ -102,7 +102,7 @@
             var cube = new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), [
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
-                new THREE.MeshLambertMaterial( {map: new THREE.CanvasTexture(Images[2][0])} ),
+                new THREE.MeshLambertMaterial( {map: new THREE.CanvasTexture(Images[1][0])} ),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
