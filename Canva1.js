@@ -99,23 +99,25 @@ function funcion1() {
   
                 // Agregar el nuevo canvas a la página o realizar cualquier acción deseada
                 document.body.appendChild(nuevoCanvas);
-                Images[i][j] = nuevoCanvas
+                // Crear la textura con filtrado de vecino más cercano
+                const texture = new THREE.CanvasTexture(nuevoCanvas);
+                texture.minFilter = THREE.NearestFilter;
+                Images[i][j] = texture
             }
-            };
+        };
         recortarTexturas();
         aTexture();
         
         let cube = null
         function CanvasTextures(){
             cube = new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), [
-                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[2][1])}),
-                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[0][1])}),
-                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[1][0])}),
-                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[2][0])}),
-                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[1][1])}),
-                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[3][1])}),
+                new THREE.MeshLambertMaterial({map: Images[2][1]}),
+                new THREE.MeshLambertMaterial({map: Images[0][1]}),
+                new THREE.MeshLambertMaterial({map: Images[1][0]}),
+                new THREE.MeshLambertMaterial({map: Images[2][0]}),
+                new THREE.MeshLambertMaterial({map: Images[1][1]}),
+                new THREE.MeshLambertMaterial({map: Images[3][1]}),
             ]);
-            cube.material.map.minFilter = THREE.NearestFilter
         }
         
         function CubeTextures(){
