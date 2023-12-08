@@ -128,11 +128,27 @@ function funcion1() {
 	            Images[1][0].toDataURL(), 
                 Images[1][0].toDataURL()
             ] );
-            cube = new THREE.Mesh(new THREE.BoxGeometry( 8, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } ) );
+            // Utilizar BufferGeometry en lugar de Geometry para acceder a las coordenadas UV
+            const geometry = new THREE.BoxBufferGeometry(8, 8, 8);
+
+            // Configurar manualmente las coordenadas UV para evitar el movimiento de la textura
+            const uvMapping = [
+                new THREE.Vector2(0, 0),
+                new THREE.Vector2(1, 0),
+                new THREE.Vector2(1, 1),
+                new THREE.Vector2(0, 1),
+            ];
+
+            // Asignar coordenadas UV al cubo
+            geometry.faceVertexUvs[0] = [];
+            geometry.faceVertexUvs[0][0] = [uvMapping[0], uvMapping[1], uvMapping[3]];
+            geometry.faceVertexUvs[0][1] = [uvMapping[1], uvMapping[2], uvMapping[3]];
+
+            cube = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: textureCube }));
         }
         setTimeout(() => {
-        CanvasTextures()
-        //CubeTextures()
+        //CanvasTextures()
+        CubeTextures()
         cube.castShadow = true; // Permitir que el objeto genere sombras
         cube.position.set(0, 0, 0); // Ajustar la posición del cubo
         scene.add(cube);
