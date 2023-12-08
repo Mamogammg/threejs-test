@@ -55,7 +55,7 @@
                 context.moveTo( 0, 512 );
                 context.lineTo( 512, 0 );
                 context.stroke( );
-                Images.push(canvas)
+                Images[2][0] = canvas
             }
               
             function recortarTexturas() {
@@ -102,7 +102,7 @@
             var cube = new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), [
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
-                new THREE.MeshLambertMaterial( {map: new THREE.CanvasTexture(Images[1][0])} ),
+                new THREE.MeshLambertMaterial( {map: new THREE.CanvasTexture(Images[2][0])} ),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
