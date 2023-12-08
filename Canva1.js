@@ -32,7 +32,8 @@
             
             // Crear una textura combinada que contiene las imágenes recortadas
             var combinedTexture = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD6SURBVEhL3VVBDoIwENwKj8GTiST+Rz6A7+AkL/AdfsEErvIYDMruTGMagwQOEOYy1e22u5Pp4uQ/OvBUDN4xqoAPdJE2tr0qlMTdjBl/4bhToyT1Xmnwjh14MYxS4Pi0RX23TruLpTGZ8co67iVRck53bEAB78KzkTvgHyhBD0iG4+AN/NqAAuCpGLyjD869YBa0gBYlxKUt2tyKjlE7K0wDt7M1voJHYhwhwDjPj3CSK5XUQ6vwgFfgV4U9/DtPsBFu5yT0cUzI4BWIXC2PykaZkuavQ4Fwln9XqAg6oFf8HMB8YOf0Cr4FPs750eVKOinXoYAtl4DIG1EDVRJkE/K7AAAAAElFTkSuQmCC");
-            
+
+            let Images = [[],[],[]]
             var canvas = null
             function aTexture(){
             canvas = document.createElement( 'CANVAS' );
@@ -54,9 +55,9 @@
                 context.moveTo( 0, 512 );
                 context.lineTo( 512, 0 );
                 context.stroke( );
+                Images.push(canvas)
             }
-
-            let Images = [[],[]]
+              
             function recortarTexturas() {
                 // Obtener el contexto del canvas
                 var canvas = document.getElementById("minecraftCanvas");
