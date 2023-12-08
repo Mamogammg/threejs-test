@@ -130,11 +130,13 @@ function funcion1() {
             ] );
             cube = new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } ) );
         }
+        setTimeout(() => {
         //CanvasTextures()
         CubeTextures()
         cube.castShadow = true; // Permitir que el objeto genere sombras
         cube.position.set(0, 0, 0); // Ajustar la posición del cubo
         scene.add(cube);
+        }, 100); 
         
         // Definir variables globales para almacenar el estado del mouse.
         var isDragging1 = false;
