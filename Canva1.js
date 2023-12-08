@@ -86,19 +86,20 @@ function funcion1() {
             // Función para recortar la imagen en partes de 8x8
             function recortarImagen(i,j) {
                 // Crear un nuevo canvas para cada parte
-                Images[i][j] = document.createElement("CANVAS");
-                Images[i][j].width = 8;
-                Images[i][j].height = 8;
-                Images[i][j].setAttribute("cross-origin","use-credentials")
-                 var nuevoCtx = Images[i][j].getContext("2d");
+                let nuevoCanvas = document.createElement("CANVAS");
+                nuevoCanvas.width = 8;
+                nuevoCanvas.height = 8;
+                nuevoCanvas.setAttribute("cross-origin","use-credentials")
+                 var nuevoCtx = nuevoCanvas.getContext("2d");
 
                 // Copiar la porción de la imagen al nuevo canvas
                 nuevoCtx.drawImage(canvas, i * 8, j * 8, 8, 8, 0, 0, 8, 8);
                 const id = "("+i+","+j+")"
-                Images[i][j].id = id
+                nuevoCanvas.id = id
   
                 // Agregar el nuevo canvas a la página o realizar cualquier acción deseada
-                document.body.appendChild(Images[i][j]);
+                document.body.appendChild(nuevoCanvas);
+                Images[i][j] = nuevoCanvas
             }
             };
         recortarTexturas();
