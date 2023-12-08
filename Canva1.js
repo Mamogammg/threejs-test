@@ -115,6 +115,7 @@ function funcion1() {
                 new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[1][1])}),
                 new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[3][1])}),
             ]);
+            cube.material.map.minFilter = THREE.NearestFilter
         }
         
         function CubeTextures(){
