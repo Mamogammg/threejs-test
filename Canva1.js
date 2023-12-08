@@ -13,7 +13,7 @@ function funcion1() {
         var scene = new THREE.Scene();
 
         var camera = new THREE.PerspectiveCamera(45, canvas1.width / canvas1.height, 1, 1000);
-        camera.position.set(0, 0, 5);
+        camera.position.set(0, 0, 15);
         scene.add(camera);
         camera.aspect = canvas1.clientWidth / canvas1.clientHeight;
         camera.updateProjectionMatrix();
@@ -128,7 +128,7 @@ function funcion1() {
 	            Images[1][0].toDataURL(), 
                 Images[1][0].toDataURL()
             ] );
-            cube = new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } ) );
+            cube = new THREE.Mesh(new THREE.BoxGeometry( 8, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } ) );
         }
         setTimeout(() => {
         //CanvasTextures()
