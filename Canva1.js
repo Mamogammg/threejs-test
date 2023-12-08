@@ -13,7 +13,7 @@ function funcion1() {
         var scene = new THREE.Scene();
 
         var camera = new THREE.PerspectiveCamera(45, canvas1.width / canvas1.height, 1, 1000);
-        camera.position.set(0, 0, 15);
+        camera.position.set(0, 0, 5);
         scene.add(camera);
         camera.aspect = canvas1.clientWidth / canvas1.clientHeight;
         camera.updateProjectionMatrix();
@@ -111,7 +111,7 @@ function funcion1() {
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {map: new THREE.CanvasTexture(Images[1][0])} ),
-                new THREE.MeshLambertMaterial( {color: 'lightgray'}),
+                new THREE.MeshLambertMaterial( {map: new THREE.CanvasTexture(Images[2][0])}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
                 new THREE.MeshLambertMaterial( {color: 'lightgray'}),
             ]);
