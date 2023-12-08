@@ -112,8 +112,8 @@ function funcion1() {
                 new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[0][1])}),
                 new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[1][0])}),
                 new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[2][0])}),
-                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[3][1])}),
                 new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[1][1])}),
+                new THREE.MeshLambertMaterial({map: new THREE.CanvasTexture(Images[3][1])}),
             ]);
         }
         
