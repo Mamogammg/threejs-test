@@ -92,7 +92,7 @@
                     Images[i][j].id = id
       
                     // Agregar el nuevo canvas a la página o realizar cualquier acción deseada
-                    document.body.appendChild(nuevoCanvas);
+                    document.body.appendChild(Images[i][j]);
                 }
                 };
             recortarTexturas();
