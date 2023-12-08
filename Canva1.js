@@ -6,7 +6,7 @@ function funcion1() {
         
         var canvas1 = document.getElementById("myCanvas1");
         var renderer = new THREE.WebGLRenderer({canvas: canvas1});
-        renderer.setClearColor(0x000000);
+        renderer.setClearColor(0xffffff);
         renderer.shadowMap.enabled = true; // Habilitar el renderizado de sombras
         renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Tipo de sombra suave
 
