@@ -139,14 +139,15 @@ function funcion1() {
             ] );
             cube = new THREE.Mesh(new THREE.BoxGeometry( 8, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } ) );
         }
+        let cube = CanvasTextures(1, 0, 0)
         setTimeout(() => {
-            let cube = CanvasTextures(1, 0, 0)
+            cube = CanvasTextures(1, 0, 0)
             //CubeTextures()
             cube.castShadow = true; // Permitir que el objeto genere sombras
             cube.position.set(0, 0, 0); // Ajustar la posición del cubo
             scene.add(cube);
             setTimeout(() => {
-                let cube = CanvasTextures(1.5, 4, 4)
+                cube = CanvasTextures(1.5, 4, 4)
                 //CubeTextures()
                 cube.castShadow = true; // Permitir que el objeto genere sombras
                 cube.position.set(0, 0, 0); // Ajustar la posición del cubo
