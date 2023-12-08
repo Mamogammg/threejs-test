@@ -147,7 +147,7 @@ function funcion1() {
             cube.position.set(0, 0, 0); // Ajustar la posición del cubo
             scene.add(cube);
             setTimeout(() => {
-                cube = CanvasTextures(1.5, 4, 4)
+                cube = CanvasTextures(1.5, 4, 0)
                 //CubeTextures()
                 cube.castShadow = true; // Permitir que el objeto genere sombras
                 cube.position.set(0, 0, 0); // Ajustar la posición del cubo
