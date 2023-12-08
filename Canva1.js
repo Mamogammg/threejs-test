@@ -101,7 +101,7 @@ function funcion1() {
                 document.body.appendChild(nuevoCanvas);
                 // Crear la textura con filtrado de vecino más cercano
                 const texture = new THREE.CanvasTexture(nuevoCanvas);
-                texture.minFilter = THREE.NearestFilter;
+                texture.magFilter = THREE.NearestFilter;
                 Images[i][j] = texture
             }
         };
