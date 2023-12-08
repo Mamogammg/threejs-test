@@ -19,7 +19,7 @@ function funcion1() {
         camera.updateProjectionMatrix();
 
         // Crear una luz que genere sombras
-        var light = new THREE.DirectionalLight(0xffffff, 1);
+        var light = new THREE.DirectionalLight(0x000000, 1);
         light.position.set(0, 5, 5);
         light.castShadow = true;
         scene.add(light);
@@ -33,7 +33,7 @@ function funcion1() {
         // Crear una textura combinada que contiene las imágenes recortadas
         var combinedTexture = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAD6SURBVEhL3VVBDoIwENwKj8GTiST+Rz6A7+AkL/AdfsEErvIYDMruTGMagwQOEOYy1e22u5Pp4uQ/OvBUDN4xqoAPdJE2tr0qlMTdjBl/4bhToyT1Xmnwjh14MYxS4Pi0RX23TruLpTGZ8co67iVRck53bEAB78KzkTvgHyhBD0iG4+AN/NqAAuCpGLyjD869YBa0gBYlxKUt2tyKjlE7K0wDt7M1voJHYhwhwDjPj3CSK5XUQ6vwgFfgV4U9/DtPsBFu5yT0cUzI4BWIXC2PykaZkuavQ4Fwln9XqAg6oFf8HMB8YOf0Cr4FPs750eVKOinXoYAtl4DIG1EDVRJkE/K7AAAAAElFTkSuQmCC");
 
-        let Images = [[],[],[],[],[]]
+        let Images = [[],[],[],[],[],[],[],[]]
         var canvas = null
         function aTexture(){
         canvas = document.createElement( 'CANVAS' );
@@ -67,13 +67,13 @@ function funcion1() {
             var img = new Image();
 
             // Establecer la ruta de la imagen
-            img.src = 'cabeza_minecraft.png';
+            img.src = 'RubikCube.png';
 
             // Esperar a que la imagen se cargue
             img.onload = function() {
                 img.setAttribute("cross-origin","use-credentials")
                 // Dibujar la imagen en el canvas
-                ctx.drawImage(img, 0, 0, 32, 16);
+                ctx.drawImage(img, 0, 0, 64, 64);
                 // Llamar a la función para recortar la imagen
                 recortarImagen(1,0);
                 recortarImagen(2,0);
@@ -81,6 +81,13 @@ function funcion1() {
                 recortarImagen(1,1);
                 recortarImagen(2,1);
                 recortarImagen(3,1);
+
+                recortarImagen(5,0);
+                recortarImagen(6,0);
+                recortarImagen(4,1);
+                recortarImagen(5,1);
+                recortarImagen(6,1);
+                recortarImagen(7,1);
             };
 
             // Función para recortar la imagen en partes de 8x8
@@ -106,17 +113,16 @@ function funcion1() {
             }
         };
         recortarTexturas();
-        aTexture();
+        //aTexture();
         
-        let cube = null
-        function CanvasTextures(){
-            cube = new THREE.Mesh(new THREE.BoxGeometry( 1, 1, 1 ), [
-                new THREE.MeshLambertMaterial({map: Images[2][1]}),
-                new THREE.MeshLambertMaterial({map: Images[0][1]}),
-                new THREE.MeshLambertMaterial({map: Images[1][0]}),
-                new THREE.MeshLambertMaterial({map: Images[2][0]}),
-                new THREE.MeshLambertMaterial({map: Images[1][1]}),
-                new THREE.MeshLambertMaterial({map: Images[3][1]}),
+        function CanvasTextures(scale,x,y){
+            return new THREE.Mesh(new THREE.BoxGeometry( scale, scale, scale ), [
+                new THREE.MeshLambertMaterial({map: Images[2+x][1+y]}),
+                new THREE.MeshLambertMaterial({map: Images[0+x][1+y]}),
+                new THREE.MeshLambertMaterial({map: Images[1+x][0+y]}),
+                new THREE.MeshLambertMaterial({map: Images[2+x][0+y]}),
+                new THREE.MeshLambertMaterial({map: Images[1+x][1+y]}),
+                new THREE.MeshLambertMaterial({map: Images[3+x][1+y]}),
             ]);
         }
         
@@ -134,11 +140,18 @@ function funcion1() {
             cube = new THREE.Mesh(new THREE.BoxGeometry( 8, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } ) );
         }
         setTimeout(() => {
-        CanvasTextures()
-        //CubeTextures()
-        cube.castShadow = true; // Permitir que el objeto genere sombras
-        cube.position.set(0, 0, 0); // Ajustar la posición del cubo
-        scene.add(cube);
+            let cube = CanvasTextures(1, 0, 0)
+            //CubeTextures()
+            cube.castShadow = true; // Permitir que el objeto genere sombras
+            cube.position.set(0, 0, 0); // Ajustar la posición del cubo
+            scene.add(cube);
+            setTimeout(() => {
+                let cube = CanvasTextures(1.5, 4, 4)
+                //CubeTextures()
+                cube.castShadow = true; // Permitir que el objeto genere sombras
+                cube.position.set(0, 0, 0); // Ajustar la posición del cubo
+                scene.add(cube);
+            }, 200);
         }, 200); 
         
         // Definir variables globales para almacenar el estado del mouse.
