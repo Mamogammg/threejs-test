@@ -19,7 +19,7 @@ function funcion1() {
         camera.updateProjectionMatrix();
 
         // Crear una luz que genere sombras
-        var light = new THREE.DirectionalLight(0x000000, 1);
+        var light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(0, 5, 5);
         light.castShadow = true;
         scene.add(light);
@@ -152,8 +152,8 @@ function funcion1() {
                 cube.castShadow = true; // Permitir que el objeto genere sombras
                 cube.position.set(0, 0, 0); // Ajustar la posición del cubo
                 scene.add(cube);
-            }, 200);
-        }, 200); 
+            }, 400);
+        }, 400); 
         
         // Definir variables globales para almacenar el estado del mouse.
         var isDragging1 = false;
