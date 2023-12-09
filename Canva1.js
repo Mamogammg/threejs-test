@@ -60,6 +60,8 @@ function funcion1() {
           
         function recortarTexturas() {
             // Obtener el contexto del canvas
+            var canvas = document.getElementById("minecraftCanvas");
+            var ctx = canvas.getContext("2d");
             var input = document.getElementById("Input")
 
             const file = input.files[0];
@@ -73,29 +75,27 @@ function funcion1() {
                     img.src = e.target.result;
                     img.setAttribute("cross-origin","use-credentials");
                     // Dibujar la imagen en el canvas
-                    var canvas = document.getElementById("minecraftCanvas");
-                    var ctx = canvas.getContext("2d");
                     ctx.drawImage(img, 0, 0, 64, 64);
                     // Llamar a la función para recortar la imagen
-                    recortarImagen(1,0);
-                    recortarImagen(2,0);
-                    recortarImagen(0,1);
-                    recortarImagen(1,1);
-                    recortarImagen(2,1);
-                    recortarImagen(3,1);
+                    recortarImagen(1,0,canvas);
+                    recortarImagen(2,0,canvas);
+                    recortarImagen(0,1,canvas);
+                    recortarImagen(1,1,canvas);
+                    recortarImagen(2,1,canvas);
+                    recortarImagen(3,1,canvas);
 
-                    recortarImagen(5,0);
-                    recortarImagen(6,0);
-                    recortarImagen(4,1);
-                    recortarImagen(5,1);
-                    recortarImagen(6,1);
-                    recortarImagen(7,1);
+                    recortarImagen(5,0,canvas);
+                    recortarImagen(6,0,canvas);
+                    recortarImagen(4,1,canvas);
+                    recortarImagen(5,1,canvas);
+                    recortarImagen(6,1,canvas);
+                    recortarImagen(7,1,canvas);
                 }
-                reader.readAsDataURL();
+                reader.readAsDataURL(file);
             };
 
             // Función para recortar la imagen en partes de 8x8
-            function recortarImagen(i,j) {
+            function recortarImagen(i,j,canvas) {
                 // Crear un nuevo canvas para cada parte
                 let nuevoCanvas = document.createElement("CANVAS");
                 nuevoCanvas.width = 8;
