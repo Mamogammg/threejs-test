@@ -117,12 +117,12 @@ function funcion1() {
         
         function CanvasTextures(scale,x,y){
             return new THREE.Mesh(new THREE.BoxGeometry( scale, scale, scale ), [
-                new THREE.MeshLambertMaterial({map: Images[2+x][1+y]}),
-                new THREE.MeshLambertMaterial({map: Images[0+x][1+y]}),
-                new THREE.MeshLambertMaterial({map: Images[1+x][0+y]}),
-                new THREE.MeshLambertMaterial({map: Images[2+x][0+y]}),
-                new THREE.MeshLambertMaterial({map: Images[1+x][1+y]}),
-                new THREE.MeshLambertMaterial({map: Images[3+x][1+y]}),
+                new THREE.MeshLambertMaterial({map: Images[2+x][1+y], transparent: true, side: THREE.DoubleSide}),
+                new THREE.MeshLambertMaterial({map: Images[0+x][1+y], transparent: true, side: THREE.DoubleSide}),
+                new THREE.MeshLambertMaterial({map: Images[1+x][0+y], transparent: true, side: THREE.DoubleSide}),
+                new THREE.MeshLambertMaterial({map: Images[2+x][0+y], transparent: true, side: THREE.DoubleSide}),
+                new THREE.MeshLambertMaterial({map: Images[1+x][1+y], transparent: true, side: THREE.DoubleSide}),
+                new THREE.MeshLambertMaterial({map: Images[3+x][1+y], transparent: true, side: THREE.DoubleSide}),
             ]);
         }
         
@@ -140,6 +140,7 @@ function funcion1() {
             cube = new THREE.Mesh(new THREE.BoxGeometry( 8, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff, envMap: textureCube } ) );
         }
         let cube = CanvasTextures(1, 0, 0)
+        let cube2 = CanvasTextures(1.25, 4, 0)
         setTimeout(() => {
             cube = CanvasTextures(1, 0, 0)
             //CubeTextures()
@@ -147,11 +148,11 @@ function funcion1() {
             cube.position.set(0, 0, 0); // Ajustar la posición del cubo
             scene.add(cube);
             setTimeout(() => {
-                cube = CanvasTextures(1.5, 4, 0)
+                cube2 = CanvasTextures(1.125, 4, 0)
                 //CubeTextures()
-                cube.castShadow = true; // Permitir que el objeto genere sombras
-                cube.position.set(0, 0, 0); // Ajustar la posición del cubo
-                scene.add(cube);
+                cube2.castShadow = true; // Permitir que el objeto genere sombras
+                cube2.position.set(0, 0, 0); // Ajustar la posición del cubo
+                scene.add(cube2);
             }, 400);
         }, 400); 
         
@@ -182,7 +183,8 @@ function funcion1() {
             0,
             'XYZ'
             ));
-        cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+            cube.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube.quaternion);
+            cube2.quaternion.multiplyQuaternions(deltaRotationQuaternion, cube2.quaternion);
         }
             previousMousePosition = {
         x: event1.offsetX,
