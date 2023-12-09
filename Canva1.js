@@ -75,6 +75,8 @@ function funcion1() {
                     img.src = e.target.result;
                     img.setAttribute("cross-origin","use-credentials");
                     // Dibujar la imagen en el canvas
+                    ctx.clearRect(0,0,64,64)
+                    document.getElementById("image").remove();
                     ctx.drawImage(img, 0, 0, 64, 64);
                     // Llamar a la función para recortar la imagen
                     recortarImagen(1,0,canvas);
@@ -105,8 +107,9 @@ function funcion1() {
 
                 // Copiar la porción de la imagen al nuevo canvas
                 nuevoCtx.drawImage(canvas, i * 8, j * 8, 8, 8, 0, 0, 8, 8);
-                const id = "("+i+","+j+")"
+                const id = "("+i+","+j+") image"
                 nuevoCanvas.id = id
+                nuevoCanvas.style.display = "none"
   
                 // Agregar el nuevo canvas a la página o realizar cualquier acción deseada
                 document.body.appendChild(nuevoCanvas);
