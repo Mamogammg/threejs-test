@@ -60,34 +60,38 @@ function funcion1() {
           
         function recortarTexturas() {
             // Obtener el contexto del canvas
-            var canvas = document.getElementById("minecraftCanvas");
-            var ctx = canvas.getContext("2d");
+            var input = document.getElementById("Input")
 
-            // Crear una nueva imagen
-            var img = new Image();
-
-            // Establecer la ruta de la imagen
-            img.src = 'RubikCube.png';
+            const file = input.files[0];
 
             // Esperar a que la imagen se cargue
-            img.onload = function() {
-                img.setAttribute("cross-origin","use-credentials")
-                // Dibujar la imagen en el canvas
-                ctx.drawImage(img, 0, 0, 64, 64);
-                // Llamar a la función para recortar la imagen
-                recortarImagen(1,0);
-                recortarImagen(2,0);
-                recortarImagen(0,1);
-                recortarImagen(1,1);
-                recortarImagen(2,1);
-                recortarImagen(3,1);
+            if (file) {
+                const reader = new FileReader();
 
-                recortarImagen(5,0);
-                recortarImagen(6,0);
-                recortarImagen(4,1);
-                recortarImagen(5,1);
-                recortarImagen(6,1);
-                recortarImagen(7,1);
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    img.setAttribute("cross-origin","use-credentials");
+                    // Dibujar la imagen en el canvas
+                    var canvas = document.getElementById("minecraftCanvas");
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, 64, 64);
+                    // Llamar a la función para recortar la imagen
+                    recortarImagen(1,0);
+                    recortarImagen(2,0);
+                    recortarImagen(0,1);
+                    recortarImagen(1,1);
+                    recortarImagen(2,1);
+                    recortarImagen(3,1);
+
+                    recortarImagen(5,0);
+                    recortarImagen(6,0);
+                    recortarImagen(4,1);
+                    recortarImagen(5,1);
+                    recortarImagen(6,1);
+                    recortarImagen(7,1);
+                }
+                reader.readAsDataURL();
             };
 
             // Función para recortar la imagen en partes de 8x8

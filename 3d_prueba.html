@@ -13,16 +13,15 @@
     </head>
     <body>
         <canvas id="myCanvas1" style="width: 400px; height: 600px;"></canvas>
-        <canvas id="myCanvas2" style="width: 400px; height: 600px;"></canvas>
-        <canvas id="myCanvas3" style="width: 400px; height: 600px;"></canvas>
+        <input id="Input" type="file">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <!-- <script src="set_images.js"></script> -->
-        <script src="Canva2.js"></script> <script src="Canva1.js"></script>
+        <script src="Canva1.js"></script>
         <script>
-        window.onload = function() {
+        document.getElementById("Input").addEventListener("change",function() {
+            //funcion2 ();
             funcion1 ();
-            funcion2 ();
-        };
+        });
         </script>
         <canvas id="minecraftCanvas"></canvas>
     </body>
