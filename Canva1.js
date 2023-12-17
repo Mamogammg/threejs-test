@@ -76,7 +76,7 @@ function funcion1() {
                     img.setAttribute("cross-origin","use-credentials");
                     // Dibujar la imagen en el canvas
                     ctx.clearRect(0,0,64,64)
-                    document.getElementById("image").remove();
+                    //document.getElementById("image").remove();
                     ctx.drawImage(img, 0, 0, 64, 64);
                     // Llamar a la función para recortar la imagen
                     recortarImagen(1,0,canvas);
