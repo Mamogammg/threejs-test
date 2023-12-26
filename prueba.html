@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Editor</title>
+</head>
+<body>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        canvas {
+            border: 1px solid #000;
+        }
+
+        .loadMenu {
+            position: absolute;
+        }
+
+        .slider-container {
+             text-align: center;
+        }
+
+        .slider {
+            width: 300px;
+            -webkit-appearance: none;
+            height: 10px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            margin-bottom: 20px;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+    </style>
+    <input type="file" id="imageInput">
+    <canvas id="pixelCanvas" width="640" height="640"></canvas>
+    <button id="clearButton">Clear</button>
+    <input type="number" min="1" max="9" value="1" id="pxSize">
+    <input type="color" id="color">
+    <div class="slider-container">
+        <input type="range" min="0" max="1" value="0" id="erase" style="width: 50px">
+        <p>Mode: <span id="mode">paint</span></p>
+    </div>
+    <img class="loadMenu" style="width: 5000px;" src="black.png">
+    <button class="newButton loadMenu" style="top: 100px;">New</button>
+    <button class="loadButton loadMenu" style="bottom: 100px;">Load from URL</button>
+    <script src="EncodeDecode.js"></script>
+    <script>
+        let paintLog = []
+        const parent = window.parent
+        const url = new URL(parent.location.href)
+        const params = url.searchParams        
+        const canvas = document.getElementById('pixelCanvas');
+        const ctx = canvas.getContext('2d');        
+        var mode = 'paint'
+        var pixelSize = 10; // Tamaño de cada píxel
+        var r = 0
+        var g = 0
+        var b = 0
+        document.addEventListener('DOMContentLoaded', function () {
+            function digits(zeros,num) {
+                const array = Array.from(zeros+num)
+                let i = 0
+                while (array.length>zeros.length){
+                    console.log(array)
+                    array.shift()
+                }
+                return array.join('')
+            }
+
+            // Limpiar el lienzo
+            function clearCanvas() {
+                paintLog = []
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                initializeCanvas();
+            }
+
+            // Inicializar el lienzo al cargar la página
+            document.getElementsByClassName('newButton').item(0).addEventListener('click', function() {initializeCanvas(false)});
+                
+            document.getElementsByClassName('loadButton').item(0).addEventListener('click', function() {initializeCanvas(true)});
+
+            // Manejar clics en el lienzo
+            canvas.addEventListener('mousedown', paintPixel);
+            canvas.addEventListener('touchstart', paintPixel);
+
+            // Limpiar el lienzo al hacer clic en un botón de limpieza
+            document.getElementById('clearButton').addEventListener('click', clearCanvas);
+
+            //Establecer los valores
+            document.getElementById('pxSize').addEventListener('input', function() {
+                pixelSize = this.value*10;
+            });
+
+            document.getElementById('color').addEventListener('input', function() { 
+                var hex = this.value;
+                hex = hex.replace(/^#/, '');
+
+                // Convierte el valor hexadecimal a decimal y extrae los componentes R, G y B
+                var bigint = parseInt(hex, 16);
+                r = (bigint >> 16) & 255;
+                g = (bigint >> 8) & 255;
+                b = bigint & 255;
+                var value = `(${r},${g},${b})`
+                sliderValue.textContent = value;
+                console.log(value)
+            });
+
+            document.getElementById('erase').addEventListener('input', function() {
+                if (this.value==0)  {
+                    mode = 'paint'
+                } else {
+                    mode = 'erase'
+                }
+                document.getElementById('mode').textContent = mode
+            });
+        });
+    </script>
+
+<script>
+    function digits(zeros,num) {
+        const array = Array.from(zeros+num)
+        let i = 0
+        while (array.length>zeros.length){
+            console.log(array)
+            array.shift()
+        }
+        return array.join('')
+    }
+    var pixelArray = [];
+
+    document.getElementById('imageInput').addEventListener('change', handleImage);
+
+    function handleImage(event) {
+        var canvas = document.getElementById('pixelCanvas');
+        var ctx = canvas.getContext('2d');
+
+        // Ajusta la calidad del contexto antes de dibujar la imagen
+        ctx.imageSmoothingEnabled = true;
+        ctx.webkitImageSmoothingEnabled = false;
+        ctx.mozImageSmoothingEnabled = false;
+
+        var image = new Image();
+        image.onload = function() {
+            params.set('s',[image.width,image.height].join(' '))
+            canvas.width = image.width*10;
+            canvas.height = image.height*10;
+            ctx.drawImage(image, 0, 0, image.width, image.height);
+
+            var imageData = ctx.getImageData(0, 0, image.width, image.height);
+            var pixels = imageData.data;
+            initializeCanvas(false)
+
+            // Escanea los píxeles
+            for (var i = 0; i < pixels.length; i += 4) {
+                var r = pixels[i];
+                var g = pixels[i + 1];
+                var b = pixels[i + 2];
+                var a = pixels[i + 3];
+                var y = Math.floor((i/4)/image.width)
+                var x = ((i/4)%image.width)
+                
+                if (a!=0) {
+                    // Almacena los valores en un array
+                    pixelArray.push([digits('000',r), digits('000',g), digits('000',b), digits('00',x), digits('00',y), 1].join(''));
+                    
+                    ctx.fillStyle = `rgb(${r},${g},${b})`
+                    ctx.fillRect(x*10,y*10,10,10)
+                }
+            }
+
+            console.log(pixelArray);
+            //ctx.clearRect(0,0,image.width,image.height)
+            //ctx.drawImage(image, 0, 0, image.width, image.height); 
+            paintLog = pixelArray
+            window.parent.postMessage({message: 'oldCanvasChanged'}, '*')
+            toURL(image.width,image.height)
+        };
+
+        // Carga la imagen seleccionada
+        image.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>
+<script>
+    // Pintar un píxel cuando se hace clic
+    function paintPixel(event) {
+        const x = Math.floor(event.offsetX / pixelSize) * pixelSize;
+        const y = Math.floor(event.offsetY / pixelSize) * pixelSize;
+        console.log(paintLog)
+        if (mode=='paint') {
+            ctx.fillStyle = `rgb(${r},${g},${b})`;
+            paintLog.push([digits('000',r), digits('000',g), digits('000',b), digits('00',x/10), digits('00',y/10), Number(pixelSize)/10].join(''));
+            ctx.fillRect(x, y, pixelSize, pixelSize);
+            toURL(64);
+        } else if (mode=='erase')  {
+            for (let pixel of paintLog) {
+                if (pixel.slice(9,13)==[digits('00',x/10),digits('00',y/10)].join('')) {
+                    paintLog.splice(paintLog.indexOf(pixel),1);
+                    ctx.clearRect(x, y, pixelSize, pixelSize);
+                    toURL(64);
+                }
+            }
+            if (paintLog==[]) {
+                clearCanvas();
+            }
+        }
+        window.parent.postMessage({message: 'oldCanvasChanged'}, '*')
+    }
+
+    // Inicializar el lienzo con píxeles blancos
+    function initializeCanvas(URL) {
+        document.querySelectorAll(".loadMenu").forEach((element) => 
+            element.setAttribute('style','display: none;'),
+            //console.log(element)
+        );
+        for (let x = 0; x < canvas.width; x += pixelSize) {
+            for (let y = 0; y < canvas.height; y += pixelSize) {
+                ctx.clearRect(x, y, pixelSize, pixelSize);
+            }
+        }
+        if (URL) {
+            fromURL()
+        } else {
+            params.delete('i')
+            params.delete('s')
+            parent.history.replaceState({}, "", url.toString());
+        }
+    }
+
+    function toURL(size, height) {
+        var urlPaint = "";
+        for (var pixel of paintLog) {
+            urlPaint += encode(pixel)
+            urlPaint += ' '
+        }
+        params.set('i',urlPaint)
+        if (height) {
+            params.set('s',`${size} ${height}`)
+        } else {
+            params.set('s',`${size} ${size}`)
+        }
+        parent.history.replaceState({}, "", url.toString());
+    }
+
+    function fromURL() {
+        canvas.width = params.get('s').split(' ')[0]*10
+        canvas.height = params.get('s').split(' ')[1]*10
+        var allData = params.get('i')
+        if (!allData) {
+            return
+        }
+        console.log('url data ' + allData.length);
+        console.log('data: ' + allData);
+        var divData = allData.split(' ');
+        var colors = [];
+        var coords = []
+        var pixelSizes = []
+        let thingsDone = 0
+        function GetDataAndDecode(data) {
+            var canvas = document.getElementById('pixelCanvas');
+            var ctx = canvas.getContext('2d');
+            if (!data==''){
+                data = decode(data)
+                console.log(data.slice(9,11)*10,);
+                var r = data.slice(0,3)
+                var g = data.slice(3,6)
+                var b = data.slice(6,9)
+                var x = data.slice(9,11)*10
+                var y = data.slice(11,13)*10
+                var pixelSize=data.slice(13,14)*10
+                ctx.fillStyle = `rgb(${r},${g},${b})`
+                ctx.fillRect(x,y,pixelSize,pixelSize)
+                paintLog.push([digits('000',r), digits('000',g), digits('000',b), digits('00',x/10), digits('00',y/10), Number(pixelSize)/10].join(''));
+            }
+        }
+        for (let data of divData) {
+            //setTimeout(() => {
+                GetDataAndDecode(data)
+            //}, divData.indexOf(data)*50)
+        }
+        console.log(coords)
+        window.parent.postMessage({message: 'oldCanvasChanged'}, '*')
+    };
+</script>
+</body>
+</html>
